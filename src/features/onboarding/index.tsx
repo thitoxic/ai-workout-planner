@@ -4,13 +4,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Slider } from '@/components/ui/slider'
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { useState } from 'react'
 
 const Onboarding = () => {
-    const [details, setDetails] = useState<{ goal: string; noOfDays: number[] }>(
+    const [details, setDetails] = useState<{ goal: string; noOfDays: number[]; equipments: string[] }>(
         {
             goal: 'general-fitness',
-            noOfDays: [3]
+            noOfDays: [3],
+            equipments: []
         }
     )
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -52,6 +54,28 @@ const Onboarding = () => {
                             onValueChange={(val: number[]) => setDetails({ ...details, noOfDays: val })}
                             className='w-full mt-3'
                         />
+                    </div>
+                    <div className='mt-6'>
+                        <Label htmlFor="equipments">What equipment do you have access to?</Label>
+                        <div>
+                            <ToggleGroup className='grid grid-cols-3 mt-2' type='multiple' value={details?.equipments} onValueChange={(val: string[]) => setDetails({ ...details, equipments: val })}>
+                                <ToggleGroupItem value="barbell">🏋️ Barbell</ToggleGroupItem>
+                                <ToggleGroupItem value="dumbbell">💪 Dumbbells</ToggleGroupItem>
+                                <ToggleGroupItem value="cables">🔗 Cables</ToggleGroupItem>
+                                <ToggleGroupItem value="machines">🤖 Machines</ToggleGroupItem>
+                            </ToggleGroup>
+                        </div>
+                    </div>
+                    <div className='mt-6'>
+                        <Label htmlFor="equipments">What equipment do you have access to?</Label>
+                        <div>
+                            <ToggleGroup className='grid grid-cols-2 mt-2' type='multiple' value={details?.equipments} onValueChange={(val: string[]) => setDetails({ ...details, equipments: val })}>
+                                <ToggleGroupItem value="beginner">{`Beginner < 60kg`}</ToggleGroupItem>
+                                <ToggleGroupItem value="novice">{`Novice 60-90kg`}</ToggleGroupItem>
+                                <ToggleGroupItem value="intermediate">{`Intermediate 90-120kg`}</ToggleGroupItem>
+                                <ToggleGroupItem value="advanced">{`Advanced > 120kg`}</ToggleGroupItem>
+                            </ToggleGroup>
+                        </div>
                     </div>
                     <div className='mt-6'>
                         <Button className='w-full' >Generate Workout Plan</Button>
