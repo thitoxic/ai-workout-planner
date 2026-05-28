@@ -8,11 +8,12 @@ import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { useState } from 'react'
 
 const Onboarding = () => {
-    const [details, setDetails] = useState<{ goal: string; noOfDays: number[]; equipments: string[] }>(
+    const [details, setDetails] = useState<{ goal: string; noOfDays: number[]; equipments: string[]; weights: string[] }>(
         {
             goal: 'general-fitness',
             noOfDays: [3],
-            equipments: []
+            equipments: [],
+            weights: [],
         }
     )
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -67,9 +68,9 @@ const Onboarding = () => {
                         </div>
                     </div>
                     <div className='mt-6'>
-                        <Label htmlFor="equipments">What equipment do you have access to?</Label>
+                        <Label htmlFor="weights">How much can you lift?</Label>
                         <div>
-                            <ToggleGroup className='grid grid-cols-2 mt-2' type='multiple' value={details?.equipments} onValueChange={(val: string[]) => setDetails({ ...details, equipments: val })}>
+                            <ToggleGroup className='grid grid-cols-2 mt-2' type='multiple' value={details?.weights} onValueChange={(val: string[]) => setDetails({ ...details, weights: val })}>
                                 <ToggleGroupItem value="beginner">{`Beginner < 60kg`}</ToggleGroupItem>
                                 <ToggleGroupItem value="novice">{`Novice 60-90kg`}</ToggleGroupItem>
                                 <ToggleGroupItem value="intermediate">{`Intermediate 90-120kg`}</ToggleGroupItem>
