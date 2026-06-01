@@ -16,7 +16,18 @@ const Onboarding = () => {
             weights: [],
         }
     )
-    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
+    const submitDetails = async () => {
+        setIsLoading(true)
+        const response = await fetch('/api/workout', {
+            method: 'POST',
+            body: JSON.stringify(details),
+        })
+        const data = await response.json()
+        console.log(data)
+        setIsLoading(false)
+    }
 
     return (
         <>
@@ -79,7 +90,7 @@ const Onboarding = () => {
                         </div>
                     </div>
                     <div className='mt-6'>
-                        <Button className='w-full' >Generate Workout Plan</Button>
+                        <Button className='w-full' onClick={() => { submitDetails() }}>{isLoading ? 'Generating...' : `Generate Workout Plan`}</Button>
                     </div>
                 </CardContent>
             </Card>
