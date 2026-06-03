@@ -7,44 +7,57 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import dayjs from "dayjs";
 
 const Workouts = () => {
   const router = useRouter();
   const workoutPlan =
     typeof window !== "undefined" ? localStorage.getItem("workoutPlan") : null;
-  const [currentPlan, setCurrentPlan] = useState<any>(null);
+  const [workoutPlans, setWorkoutPlans] = useState<any>(null);
   const resetWorkout = () => {
     localStorage.removeItem("workoutPlan");
     router.push("/");
+  };
+
+  const renderTextOnCompletedAt = (completedAt: any) => {
+    if (dayjs(completedAt).isValid()) {
+      if (dayjs().diff(dayjs(completedAt), "day") > 7) {
+        return "(Completed)";
+      }
+    }
+    return "";
   };
 
   useEffect(() => {
     if (!workoutPlan) {
       router.push("/");
     }
-    setCurrentPlan(JSON.parse(workoutPlan || "{}"));
+    setWorkoutPlans(JSON.parse(workoutPlan || "{}"));
   }, []);
   const renderWorkoutPlan = () => {
-    if (currentPlan) {
-      return currentPlan?.days?.map((day: any) => {
-        return (
-          <div key={day?.day}>
-            {day?.exercises?.map((exercise: any) => {
+    if (workoutPlans) {
+      return (
+        <Card
+          className="border-2 border-solid p-3 my-2"
+          key={workoutPlans.planName}
+        >
+          <CardHeader className="">{workoutPlans.planName}</CardHeader>
+          <CardDescription className="">
+            {workoutPlans?.days?.map((day: any) => {
               return (
-                <div key={exercise.name}>
-                  <Label>{exercise.name}</Label>
-                  <p>{exercise.sets}</p>
-                  <p>{exercise.reps}</p>
-                  <p>{exercise.note}</p>
+                <div className="flex flex-column justify-center my-2 w-full mx-auto border-2 rounded-md p-3">
+                  <p key={day?.day}>
+                    {day?.day} {renderTextOnCompletedAt(day?.completedAt)}
+                  </p>
                 </div>
               );
             })}
-          </div>
-        );
-      });
+          </CardDescription>
+          <Button>Start Workout</Button>
+        </Card>
+      );
     }
   };
 
@@ -59,6 +72,7 @@ const Workouts = () => {
           {renderWorkoutPlan()}
           <div className="mt-6">
             <Button
+              variant={"outline"}
               className="w-full"
               onClick={() => {
                 resetWorkout();
