@@ -30,6 +30,15 @@ const Workouts = () => {
     return "";
   };
 
+  const getLatestWorkoutDayId = () => {
+    for (let i = 0; i < workoutPlans.length; i++) {
+      if (workoutPlans[i]?.completedAt && !workoutPlans[i + 1]?.completedAt) {
+        return workoutPlans[i + 1]?.day;
+      }
+    }
+    return 1;
+  };
+
   useEffect(() => {
     if (!workoutPlan) {
       router.push("/");
@@ -47,15 +56,22 @@ const Workouts = () => {
           <CardDescription className="">
             {workoutPlans?.days?.map((day: any) => {
               return (
-                <div className="flex flex-column justify-center my-2 w-full mx-auto border-2 rounded-md p-3">
-                  <p key={day?.day}>
+                <div
+                  key={day?.day}
+                  className="flex flex-column justify-center my-2 w-full mx-auto border-2 rounded-md p-3"
+                >
+                  <p>
                     {day?.day} {renderTextOnCompletedAt(day?.completedAt)}
                   </p>
                 </div>
               );
             })}
           </CardDescription>
-          <Button>Start Workout</Button>
+          <Button
+            onClick={() => router.push(`/workouts/${getLatestWorkoutDayId()}`)}
+          >
+            Start Workout for day {getLatestWorkoutDayId()}
+          </Button>
         </Card>
       );
     }
