@@ -1,0 +1,95 @@
+{
+    "planName": "Beginner Barbell Full Body Plan",
+    "days": [
+        {
+            "day": "Day 1",
+            "focus": "Full Body Strength",
+            "exercises": [
+                {
+                    "name": "Barbell Back Squat",
+                    "sets": 3,
+                    "reps": "8-12",
+                    "note": "Focus on depth, keep chest up."
+                },
+                {
+                    "name": "Barbell Bench Press",
+                    "sets": 3,
+                    "reps": "8-12",
+                    "note": "Control the weight, tuck elbows slightly."
+                },
+                {
+                    "name": "Barbell Bent-Over Row",
+                    "sets": 3,
+                    "reps": "8-12",
+                    "note": "Maintain a flat back, pull to navel."
+                },
+                {
+                    "name": "Barbell Overhead Press",
+                    "sets": 3,
+                    "reps": "8-12",
+                    "note": "Brace core, press directly overhead."
+                }
+            ]
+        },
+        {
+            "day": "Day 2",
+            "focus": "Full Body Strength & Hinge",
+            "exercises": [
+                {
+                    "name": "Barbell Deadlift",
+                    "sets": 3,
+                    "reps": "5-8",
+                    "note": "Keep bar close, maintain neutral spine."
+                },
+                {
+                    "name": "Barbell Romanian Deadlift",
+                    "sets": 3,
+                    "reps": "8-12",
+                    "note": "Hinge at hips, slight bend in knees."
+                },
+                {
+                    "name": "Barbell Push Press",
+                    "sets": 3,
+                    "reps": "6-10",
+                    "note": "Use leg drive to initiate the press."
+                },
+                {
+                    "name": "Barbell Floor Press",
+                    "sets": 3,
+                    "reps": "8-12",
+                    "note": "Lie on floor, press with control."
+                }
+            ]
+        },
+        {
+            "day": "Day 3",
+            "focus": "Full Body Strength",
+            "exercises": [
+                {
+                    "name": "Barbell Back Squat",
+                    "sets": 3,
+                    "reps": "8-12",
+                    "note": "Focus on depth, keep chest up."
+                },
+                {
+                    "name": "Barbell Bench Press",
+                    "sets": 3,
+                    "reps": "8-12",
+                    "note": "Control the weight, tuck elbows slightly."
+                },
+                {
+                    "name": "Barbell Bent-Over Row",
+                    "sets": 3,
+                    "reps": "8-12",
+                    "note": "Maintain a flat back, pull to navel."
+                },
+                {
+                    "name": "Barbell Overhead Press",
+                    "sets": 3,
+                    "reps": "8-12",
+                    "note": "Brace core, press directly overhead."
+                }
+            ]
+        }
+    ]
+}

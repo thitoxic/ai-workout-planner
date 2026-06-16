@@ -9,8 +9,10 @@ import {
 import { useEffect, useState } from "react";
 import { ChevronDown, Check } from "lucide-react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { useRouter } from "next/navigation";
 
 const SingleWorkout = ({ id }: { id: string }) => {
+  const router = useRouter();
   const [exercises, setExercises] = useState<any>(null);
   const [userWorkoutData, setUserWorkoutData] = useState<{
     exerciseId: string;
@@ -42,12 +44,22 @@ const SingleWorkout = ({ id }: { id: string }) => {
       weight: userWorkoutData.weight,
       completedAt: new Date().toISOString(),
     };
-    setExercises((prev: any) => {
-      const temp = [...prev];
-      temp[exerciseId].userWorkoutData = payload;
-      return temp;
-    });
-    setOpenedExercise(exerciseId + 1);
+
+    const updatedExercises = [...exercises];
+    updatedExercises[exerciseId] = {
+      ...updatedExercises[exerciseId],
+      userWorkoutData: payload,
+    };
+    setExercises(updatedExercises);
+    updateWorkoutPlan(updatedExercises);
+    const isLastExercise = exerciseId === exercises.length - 1;
+    if (isLastExercise) {
+      completeWorkoutDay();
+
+      router.push("/workouts");
+    } else {
+      setOpenedExercise(exerciseId + 1);
+    }
     setUserWorkoutData({
       exerciseId: "",
       sets: "",
@@ -56,20 +68,21 @@ const SingleWorkout = ({ id }: { id: string }) => {
     });
   };
 
-  const updateWorkoutPlan = () => {
+  const updateWorkoutPlan = (updatedExercises: any) => {
     const workoutPlans = JSON.parse(
       localStorage.getItem(`workoutPlan`) || "{}",
     );
-    workoutPlans.days[id].exercises = exercises;
-    console.log("workoutPlans", workoutPlans);
+    workoutPlans.days[Number(id) - 1].exercises = updatedExercises;
     localStorage.setItem(`workoutPlan`, JSON.stringify(workoutPlans));
   };
 
-  useEffect(() => {
-    updateWorkoutPlan();
-  }, [exercises, id]);
-
-  console.log("exercises", exercises);
+  const completeWorkoutDay = () => {
+    const workoutPlans = JSON.parse(
+      localStorage.getItem("workoutPlan") || "{}",
+    );
+    workoutPlans.days[Number(id) - 1].completedAt = new Date().toISOString();
+    localStorage.setItem("workoutPlan", JSON.stringify(workoutPlans));
+  };
 
   const renderSets = (exercise: any) => {
     return (
@@ -99,6 +112,7 @@ const SingleWorkout = ({ id }: { id: string }) => {
       </>
     );
   };
+  console.log("openedExercise", openedExercise);
 
   return (
     <div>
@@ -161,10 +175,18 @@ const SingleWorkout = ({ id }: { id: string }) => {
                       </ToggleGroupItem>
                     </ToggleGroup>
                     <Button
-                      size="xs"
+                      size="lg"
+                      className="w-full"
                       onClick={() => postOngoingExerciseData(index)}
                     >
-                      <Check />
+                      {openedExercise === exercises.length - 1 ? (
+                        <>
+                          <Check />
+                          Complete
+                        </>
+                      ) : (
+                        <Check />
+                      )}
                     </Button>
                   </CollapsibleContent>
                 </Collapsible>
