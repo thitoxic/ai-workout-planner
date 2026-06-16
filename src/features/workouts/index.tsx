@@ -31,9 +31,12 @@ const Workouts = () => {
   };
 
   const getLatestWorkoutDayId = () => {
-    for (let i = 0; i < workoutPlans.length; i++) {
-      if (workoutPlans[i]?.completedAt && !workoutPlans[i + 1]?.completedAt) {
-        return workoutPlans[i + 1]?.day;
+    for (let i = 0; i < workoutPlans?.days?.length; i++) {
+      if (
+        workoutPlans?.days[i]?.completedAt &&
+        !workoutPlans?.days[i + 1]?.completedAt
+      ) {
+        return workoutPlans?.days?.[i + 1]?.day;
       }
     }
     return 1;
@@ -70,7 +73,7 @@ const Workouts = () => {
           <Button
             onClick={() => router.push(`/workouts/${getLatestWorkoutDayId()}`)}
           >
-            Start Workout for day {getLatestWorkoutDayId()}
+            Start Workout for {getLatestWorkoutDayId()}
           </Button>
         </Card>
       );
