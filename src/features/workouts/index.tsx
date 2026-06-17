@@ -31,15 +31,15 @@ const Workouts = () => {
   };
 
   const getLatestWorkoutDayId = () => {
-    for (let i = 0; i < workoutPlans?.days?.length; i++) {
-      if (
-        workoutPlans?.days[i]?.completedAt &&
-        !workoutPlans?.days[i + 1]?.completedAt
-      ) {
-        return workoutPlans?.days?.[i + 1]?.day;
-      }
+    const nextDayIndex = workoutPlans?.days?.findIndex(
+      (day: any) => !day?.completedAt,
+    );
+
+    if (nextDayIndex === -1) {
+      return 1;
     }
-    return 1;
+
+    return nextDayIndex + 1;
   };
 
   useEffect(() => {

@@ -32,7 +32,10 @@ const SingleWorkout = ({ id }: { id: string }) => {
       const workoutPlans = JSON.parse(
         localStorage.getItem(`workoutPlan`) || "{}",
       );
-      setExercises(workoutPlans?.days[id]?.exercises);
+      const currentDay = workoutPlans?.days?.find(
+        (day: any) => day.id === Number(id),
+      );
+      setExercises(currentDay?.exercises || null);
     }
   }, [id]);
 
@@ -72,8 +75,14 @@ const SingleWorkout = ({ id }: { id: string }) => {
     const workoutPlans = JSON.parse(
       localStorage.getItem(`workoutPlan`) || "{}",
     );
-    workoutPlans.days[Number(id) - 1].exercises = updatedExercises;
-    localStorage.setItem(`workoutPlan`, JSON.stringify(workoutPlans));
+
+    const dayIndex = workoutPlans?.days?.findIndex(
+      (day: any) => day.id === Number(id),
+    );
+    if (dayIndex !== -1) {
+      workoutPlans.days[dayIndex].exercises = updatedExercises;
+      localStorage.setItem(`workoutPlan`, JSON.stringify(workoutPlans));
+    }
   };
 
   const completeWorkoutDay = () => {

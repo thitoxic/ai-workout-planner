@@ -16,15 +16,18 @@ Generate a compact workout plan based on:
 - Days per week: ${noOfDays[0]}
 - Equipment: ${equipments.join(", ")}
 - Fitness level: ${weights[0]}
+
 Return this exact JSON structure:
 {
   "planName": "string",
   "days": [
     {
-      "day": "Day 1",
+      "id": number,
+      "day": "string (e.g. Day 1)",
       "focus": "string (e.g. Push / Pull / Legs)",
       "exercises": [
         {
+          "id": number,
           "name": "string",
           "sets": number,
           "reps": "string (e.g. 8-10)",
@@ -34,12 +37,15 @@ Return this exact JSON structure:
     }
   ]
 }
+
 Rules:
-- Maximum 5 exercises per day
-- notes must be under 8 words
-- Only include exercises possible with the given equipment
-- Return ONLY the JSON, nothing else
-    `;
+- Days must have an "id" field starting from 1 (1, 2, 3, etc.) sequentially.
+- Exercises must have an "id" field starting from 1 (1, 2, 3, etc.) sequentially per day.
+- Maximum 5 exercises per day.
+- notes must be under 8 words.
+- Only include exercises possible with the given equipment.
+- Return ONLY the JSON, nothing else.
+`;
 
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
