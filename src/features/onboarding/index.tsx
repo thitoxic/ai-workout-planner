@@ -19,6 +19,7 @@ import { Slider } from "@/components/ui/slider";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { WorkoutApiResponse } from "@/types/workout";
 
 const Onboarding = () => {
   const router = useRouter();
@@ -41,7 +42,7 @@ const Onboarding = () => {
       method: "POST",
       body: JSON.stringify(details),
     });
-    const data = await response.json();
+    const data = (await response.json()) as WorkoutApiResponse;
     localStorage.setItem("workoutPlan", data.workoutPlan);
     router.push("/workouts");
     setIsLoading(false);
