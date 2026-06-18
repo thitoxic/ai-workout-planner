@@ -121,7 +121,6 @@ const SingleWorkout = ({ id }: { id: string }) => {
       </>
     );
   };
-  console.log("openedExercise", openedExercise);
 
   return (
     <div>

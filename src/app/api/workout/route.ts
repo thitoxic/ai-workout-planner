@@ -4,7 +4,6 @@ import { GoogleGenAI } from "@google/genai";
 export async function POST(request: Request) {
   try {
     const body = await request.json(); // Parses incoming JSON
-    console.log("body", body);
     const { goal, noOfDays, equipments, weights } = body;
 
     // Perform database logic here...
@@ -56,7 +55,6 @@ Rules:
       },
     });
 
-    console.log(response.text);
     return NextResponse.json(
       { success: true, workoutPlan: response.text },
       { status: 201 },
