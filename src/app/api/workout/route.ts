@@ -31,7 +31,8 @@ Return this exact JSON structure:
           "name": "string",
           "sets": number,
           "reps": "string (e.g. 8-10)",
-          "note": "string (one short tip, max 8 words)"
+          "note": "string (one short tip, max 8 words)",
+          "weights": "string (10-20kg, 20-30kg, etc.)"
         }
       ]
     }
