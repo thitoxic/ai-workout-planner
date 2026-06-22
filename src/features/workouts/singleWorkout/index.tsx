@@ -10,20 +10,17 @@ import { useEffect, useState } from "react";
 import { ChevronDown, Check } from "lucide-react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useRouter } from "next/navigation";
+import { Exercise, UserWorkoutData } from "@/types/workout";
 
 const SingleWorkout = ({ id }: { id: string }) => {
   const router = useRouter();
-  const [exercises, setExercises] = useState<any>(null);
-  const [userWorkoutData, setUserWorkoutData] = useState<{
-    exerciseId: string;
-    sets: string;
-    reps: string;
-    weight: string;
-  }>({
-    exerciseId: "",
+  const [exercises, setExercises] = useState<Exercise[] | null>(null);
+  const [userWorkoutData, setUserWorkoutData] = useState<UserWorkoutData>({
+    exerciseId: 1,
     sets: "",
     reps: "",
-    weight: "",
+    weights: "",
+    completedAt: "",
   });
   const [openedExercise, setOpenedExercise] = useState<number | null>(0);
 
@@ -40,11 +37,13 @@ const SingleWorkout = ({ id }: { id: string }) => {
   }, [id]);
 
   const postOngoingExerciseData = (exerciseId: number) => {
+    if (!exercises) return;
+
     const payload = {
       exerciseId: exerciseId,
       sets: userWorkoutData.sets,
       reps: userWorkoutData.reps,
-      weight: userWorkoutData.weight,
+      weights: userWorkoutData.weights,
       completedAt: new Date().toISOString(),
     };
 
@@ -64,14 +63,15 @@ const SingleWorkout = ({ id }: { id: string }) => {
       setOpenedExercise(exerciseId + 1);
     }
     setUserWorkoutData({
-      exerciseId: "",
+      exerciseId: 1,
       sets: "",
       reps: "",
-      weight: "",
+      weights: "",
+      completedAt: "",
     });
   };
 
-  const updateWorkoutPlan = (updatedExercises: any) => {
+  const updateWorkoutPlan = (updatedExercises: Exercise[]) => {
     const workoutPlans = JSON.parse(
       localStorage.getItem(`workoutPlan`) || "{}",
     );
@@ -93,7 +93,7 @@ const SingleWorkout = ({ id }: { id: string }) => {
     localStorage.setItem("workoutPlan", JSON.stringify(workoutPlans));
   };
 
-  const renderSets = (exercise: any) => {
+  const renderSets = (exercise: Exercise) => {
     return (
       <>
         <ToggleGroup
@@ -129,7 +129,7 @@ const SingleWorkout = ({ id }: { id: string }) => {
           <CardTitle>Day {id}</CardTitle>
         </CardHeader>
         <CardContent>
-          {exercises?.map((exercise: any, index: number) => {
+          {exercises?.map((exercise: Exercise, index: number) => {
             return (
               <div
                 key={index}
@@ -168,18 +168,18 @@ const SingleWorkout = ({ id }: { id: string }) => {
                     <div>Weights:</div>
                     <ToggleGroup
                       type="single"
-                      value={userWorkoutData?.weight?.toString()}
+                      value={userWorkoutData?.weights?.toString()}
                       onValueChange={(value: string) =>
                         setUserWorkoutData({
                           ...userWorkoutData,
-                          weight: value,
+                          weights: value,
                         })
                       }
                     >
                       <ToggleGroupItem
-                        value={exercise?.weight?.toString() || "10-20kg"}
+                        value={exercise?.weights?.toString() || "10-20kg"}
                       >
-                        {exercise?.weight || "10-20kg"}
+                        {exercise?.weights || "10-20kg"}
                       </ToggleGroupItem>
                     </ToggleGroup>
                     <Button

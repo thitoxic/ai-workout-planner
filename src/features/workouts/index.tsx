@@ -8,20 +8,21 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import dayjs from "dayjs";
+import { WorkoutDay, WorkoutPlan } from "@/types/workout";
 
 const Workouts = () => {
   const router = useRouter();
   const workoutPlan =
     typeof window !== "undefined" ? localStorage.getItem("workoutPlan") : null;
-  const [workoutPlans, setWorkoutPlans] = useState<any>(null);
+  const [workoutPlans, setWorkoutPlans] = useState<WorkoutPlan | null>(null);
   const resetWorkout = () => {
     localStorage.removeItem("workoutPlan");
     router.push("/");
   };
 
-  const renderTextOnCompletedAt = (completedAt: any) => {
+  const renderTextOnCompletedAt = (completedAt: string | undefined) => {
     if (dayjs(completedAt).isValid()) {
       if (dayjs().diff(dayjs(completedAt), "day") > 7) {
         return "(Completed)";
@@ -32,10 +33,10 @@ const Workouts = () => {
 
   const getLatestWorkoutDayId = () => {
     const nextDayIndex = workoutPlans?.days?.findIndex(
-      (day: any) => !day?.completedAt,
+      (day: WorkoutDay) => !day?.completedAt,
     );
 
-    if (nextDayIndex === -1) {
+    if (nextDayIndex === -1 || nextDayIndex === undefined) {
       return 1;
     }
 
@@ -57,7 +58,7 @@ const Workouts = () => {
         >
           <CardHeader className="">{workoutPlans.planName}</CardHeader>
           <CardDescription className="">
-            {workoutPlans?.days?.map((day: any) => {
+            {workoutPlans?.days?.map((day: WorkoutDay) => {
               return (
                 <div
                   key={day?.day}

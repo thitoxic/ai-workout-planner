@@ -2,7 +2,7 @@ export interface UserWorkoutData {
   exerciseId: number;
   sets: string;
   reps: string;
-  weight: string;
+  weights: string;
   completedAt: string;
 }
 
@@ -12,6 +12,7 @@ export interface Exercise {
   sets: number;
   reps: string;
   note: string;
+  weights?: string;
   userWorkoutData?: UserWorkoutData;
 }
 
