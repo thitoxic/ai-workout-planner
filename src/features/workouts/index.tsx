@@ -74,7 +74,7 @@ const Workouts = () => {
           <Button
             onClick={() => router.push(`/workouts/${getLatestWorkoutDayId()}`)}
           >
-            Start Workout for {getLatestWorkoutDayId()}
+            Start Workout for Day {getLatestWorkoutDayId()}
           </Button>
         </Card>
       );

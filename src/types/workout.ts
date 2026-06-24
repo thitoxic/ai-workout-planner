@@ -33,3 +33,24 @@ export interface WorkoutApiResponse {
   success: boolean;
   workoutPlan: string;
 }
+
+export interface ExerciseLog {
+  exerciseId: number;
+  exerciseName: string;
+  plannedSets: number;
+  plannedReps: string;
+  actualSets: number;
+  actualReps: string;
+  actualWeight: string;
+  completed: boolean;
+}
+
+export interface WorkoutSession {
+  id: string;
+  planName: string;
+  dayId: number;
+  dayLabel: string;
+  focus: string;
+  completedAt: string;
+  exercises: ExerciseLog[];
+}
