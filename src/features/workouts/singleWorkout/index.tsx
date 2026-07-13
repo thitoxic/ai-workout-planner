@@ -11,6 +11,7 @@ import { ChevronDown, Check } from "lucide-react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useRouter } from "next/navigation";
 import { Exercise, UserWorkoutData } from "@/types/workout";
+import "./singleWorkout.css";
 
 const SingleWorkout = ({ id }: { id: string }) => {
   const router = useRouter();
@@ -136,23 +137,24 @@ const SingleWorkout = ({ id }: { id: string }) => {
                 className="flex justify-between items-center my-2 w-full mx-auto border-2 rounded-md p-3"
               >
                 <Collapsible
-                  className="rounded-md data-[state=open]:bg-white"
+                  className="rounded-md w-100 data-[state=open]:bg-white"
                   open={openedExercise === index}
                   onOpenChange={(e) => setOpenedExercise(e ? index : null)}
                 >
                   <CollapsibleTrigger asChild>
-                    <Button variant="ghost" className="group w-full">
+                    <Button variant="ghost" className="group w-full h-12">
                       {exercise?.name}
                       <ChevronDown className="ml-auto group-data-[state=open]:rotate-180" />
                     </Button>
                   </CollapsibleTrigger>
-                  <CollapsibleContent className="flex flex-col items-start gap-2 p-2.5 pt-0 text-sm">
+                  <CollapsibleContent className="flex flex-col font-bold items-start gap-2 p-2.5 pt-2 text-sm">
                     <div>{exercise?.note || "N/A"}</div>
                     <div>Sets: </div>
                     {renderSets(exercise)}
                     <div>Reps: </div>
                     <ToggleGroup
                       type="single"
+                      
                       value={userWorkoutData?.reps?.toString()}
                       onValueChange={(value: string) =>
                         setUserWorkoutData({

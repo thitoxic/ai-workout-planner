@@ -60,6 +60,7 @@ Rules:
       { status: 201 },
     );
   } catch (error) {
+    console.log("error", error);
     return NextResponse.json(
       { error: "Invalid JSON payload" },
       { status: 400 },
