@@ -2,7 +2,9 @@ export interface UserWorkoutData {
   exerciseId: number;
   sets: string;
   reps: string;
+  customReps?: string;
   weights: string;
+  customWeights?: string;
   completedAt: string;
 }
 

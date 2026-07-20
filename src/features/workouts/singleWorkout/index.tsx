@@ -22,9 +22,24 @@ const SingleWorkout = ({ id }: { id: string }) => {
     sets: "",
     reps: "",
     weights: "",
+    customReps: "",
+    customWeights: "",
     completedAt: "",
   });
   const [openedExercise, setOpenedExercise] = useState<number | null>(0);
+
+  const disableCompleteButton = () => {
+    if(!userWorkoutData.sets || !userWorkoutData.reps || !userWorkoutData.weights) {
+      return true;
+    }
+    if(userWorkoutData.reps === "custom" && !userWorkoutData.customReps) {
+      return true;
+    }
+    if(userWorkoutData.weights === "custom" && !userWorkoutData.customWeights) {
+      return true;
+    }
+    return false;
+  }
 
   useEffect(() => {
     if (id) {
@@ -167,7 +182,28 @@ const SingleWorkout = ({ id }: { id: string }) => {
                       <ToggleGroupItem value={exercise?.reps?.toString()}>
                         {exercise?.reps}
                       </ToggleGroupItem>
+                      <ToggleGroupItem
+                        value="custom"
+                      >
+                        Customized
+                      </ToggleGroupItem>
                     </ToggleGroup>
+                    {userWorkoutData?.reps === "custom" && (
+                        <div className="flex flex-col gap-2 w-full">
+                           <Input
+                          type="text"
+                          placeholder="Enter custom reps" 
+                          value={userWorkoutData?.customReps}
+                          onChange={(e) =>
+                            setUserWorkoutData({
+                              ...userWorkoutData,
+                              customReps: e.target.value,
+                            })
+                          }
+                        />
+                        </div>
+                       
+                      )}
                     <div>Weights:</div>
                     <ToggleGroup
                       type="single"
@@ -189,24 +225,29 @@ const SingleWorkout = ({ id }: { id: string }) => {
                       >
                         Customized
                       </ToggleGroupItem>
-                      {userWorkoutData?.weights === "custom" && (
-                        <Input
+                      
+                    </ToggleGroup>
+                    {userWorkoutData?.weights === "custom" && (
+                        <div className="flex flex-col gap-2 w-full">
+                           <Input
                           type="text"
                           placeholder="Enter custom weight"
-                          value={""}
+                          value={userWorkoutData?.customWeights}
                           onChange={(e) =>
                             setUserWorkoutData({
                               ...userWorkoutData,
-                              weights: e.target.value,
+                              customWeights: e.target.value,
                             })
                           }
                         />
+                        </div>
+                       
                       )}
-                    </ToggleGroup>
                     <Button
                       size="lg"
                       className="w-full"
                       onClick={() => postOngoingExerciseData(index)}
+                      disabled={disableCompleteButton()}
                     >
                       {openedExercise === exercises.length - 1 ? (
                         <>
