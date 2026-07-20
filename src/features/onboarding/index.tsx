@@ -117,16 +117,16 @@ const Onboarding = () => {
                   setDetails({ ...details, equipments: val })
                 }
               >
-                <ToggleGroupItem value="barbell">🏋️ Barbell</ToggleGroupItem>
-                <ToggleGroupItem value="dumbbell">💪 Dumbbells</ToggleGroupItem>
-                <ToggleGroupItem value="cables">🔗 Cables</ToggleGroupItem>
-                <ToggleGroupItem value="machines">🤖 Machines</ToggleGroupItem>
+                <ToggleGroupItem className="col-span-1" value="barbell">🏋️ Barbell</ToggleGroupItem>
+                <ToggleGroupItem className="col-span-2" value="dumbbell">💪 Dumbbells</ToggleGroupItem>
+                <ToggleGroupItem className="col-span-2"value="cables">🔗 Cables</ToggleGroupItem>
+                <ToggleGroupItem className="col-span-1" value="machines">🤖 Machines</ToggleGroupItem>
               </ToggleGroup>
             </div>
           </div>
           <div className="mt-6">
             <Label htmlFor="weights">How much can you lift?</Label>
-            <div>
+            <div className="flex items-center justify-center">
               <ToggleGroup
                 className="grid grid-cols-2 mt-2"
                 type="multiple"
@@ -137,8 +137,8 @@ const Onboarding = () => {
               >
                 <ToggleGroupItem value="beginner">{`Beginner < 60kg`}</ToggleGroupItem>
                 <ToggleGroupItem value="novice">{`Novice 60-90kg`}</ToggleGroupItem>
-                <ToggleGroupItem value="intermediate">{`Intermediate 90-120kg`}</ToggleGroupItem>
-                <ToggleGroupItem value="advanced">{`Advanced > 120kg`}</ToggleGroupItem>
+                <ToggleGroupItem className="col-span-2" value="intermediate">{`Intermediate 90-120kg`}</ToggleGroupItem>
+                <ToggleGroupItem className="col-span-2" value="advanced">{`Advanced > 120kg`}</ToggleGroupItem>
               </ToggleGroup>
             </div>
           </div>

@@ -12,6 +12,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useRouter } from "next/navigation";
 import { Exercise, UserWorkoutData } from "@/types/workout";
 import "./singleWorkout.css";
+import { Input } from "@/components/ui/input";
 
 const SingleWorkout = ({ id }: { id: string }) => {
   const router = useRouter();
@@ -183,6 +184,24 @@ const SingleWorkout = ({ id }: { id: string }) => {
                       >
                         {exercise?.weights || "10-20kg"}
                       </ToggleGroupItem>
+                      <ToggleGroupItem
+                        value="custom"
+                      >
+                        Customized
+                      </ToggleGroupItem>
+                      {userWorkoutData?.weights === "custom" && (
+                        <Input
+                          type="text"
+                          placeholder="Enter custom weight"
+                          value={""}
+                          onChange={(e) =>
+                            setUserWorkoutData({
+                              ...userWorkoutData,
+                              weights: e.target.value,
+                            })
+                          }
+                        />
+                      )}
                     </ToggleGroup>
                     <Button
                       size="lg"
